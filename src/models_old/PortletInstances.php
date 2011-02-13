@@ -1,5 +1,7 @@
 <?php
 
+namespace Fluid;
+
 require_once("src/models/Model.php");
 
 /**

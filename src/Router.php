@@ -47,7 +47,7 @@ class Router implements IDispatcher{
 			require_once("src/PortletManager.php");
 			$data = null;
 			if(array_key_exists('identifier', $_GET)) $data = array('identifier' => $_GET['identifier']);
-			$out = FPortletManager::loadPortletByName($portletName, $data, false, $portletMethod);
+			$out = PortletManager::loadPortletByName($portletName, $data, false, $portletMethod);
 			$response = Factory::get('response');
 			$response->appendData($out);
 		}

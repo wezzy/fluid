@@ -18,9 +18,9 @@ Factory::registerCustomInitialization('dbAdapter', function(){
 		$mongoUrl = "mongodb://" . $config->database->params->username . ":" . $config->database->params->password . "@" . $config->database->params->host . ":" . $config->database->params->port;fb($mongoUrl);
 	}else{
 		// Anonymous connection
-		$mongoUrl = "mongodb://" . $config->database->params->host . ":" . $config->database->params->port;fb($mongoUrl);
+		$mongoUrl = "mongodb://" . $config->database->params->host . ":" . $config->database->params->port;
 	}
-	
+	Factory::get('logger')->log("Connected to db at " . $mongoUrl, \Zend_Log::INFO);
 	$conn = new \Mongo($mongoUrl, array("persist" => "x"));
 	
 	$db = $conn->selectDB($config->database->params->dbname);
@@ -71,7 +71,7 @@ Factory::registerCustomInitialization('eventsDispatcher', function(){
 // Register the initializer function for the authentication component
 Factory::registerCustomInitialization('auth', function(){
 	require_once("Auth.php");
-	$auth = new FAuth();
+	$auth = new Auth();
 	return $auth;
 });
 
@@ -85,6 +85,6 @@ Factory::registerCustomInitialization('acl', function(){
 // Register the initializer function for the ACL component
 Factory::registerCustomInitialization('staticLoader', function(){
 	require_once("StaticLoader.php");
-	$sl = new FStaticLoader();
+	$sl = new StaticLoader();
 	return $sl;
 });

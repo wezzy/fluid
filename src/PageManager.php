@@ -19,7 +19,7 @@ class PageManager implements IDispatcher{
 	private $_requiredCss = array();
 	private $_requiredJs = array();
 	
-    public function PageManager($zone){
+    public function __construct($zone){
 
     	$this->_zone = $zone;
 	
@@ -86,24 +86,18 @@ class PageManager implements IDispatcher{
 
         $this->applyBeforeFilters();
 
-        $req = Factory::get('request');
+        $req = Factory::get('request');		
+		$db = Factory::get('dbAdapter');
 
-        require_once("src/models/Pages.php");
-        $table = new Pages();
-
-        $select = $table->select();
-        $select->where('url = ?', $req->getUrl());
-        $select->where('zone_id = ?', $this->_zone->getId());
-        $data = $table->fetchRow($select);
-        
+		$data = $db->pages->findOne(array(
+			"url" => $req->getUrl()
+		));
+		
         if(!$data){
 			// TODO reaplce this with a real error
         	fb("Error while processing the page");
             exit();
         }
-
-        $this->_data = $data->toArray();
-        //fb($this->_data);
 		
         // TODO check ACL
 
@@ -136,17 +130,20 @@ class PageManager implements IDispatcher{
     }
 
     private function _loadPortletContainer(){
-        require_once("src/models/PortletInstances.php");
-
-        $table = new PortletInstances();
-
-        $select = $table->select();
-        $select->where("page_id = ?", $this->_data['id']);
-        $select->order("container_name");
-        $select->order("order");
-
-        $data = $table->fetchAll($select);
-        $data = $data->toArray();
+	
+		$data = array();
+		$db = Factory::get('dbAdapter');
+		$cursor = $db->portlets->find(array(
+			"page_id" => $this->_data['id']
+		));
+		$cursor->sort(array(
+			"container_name" => 1,
+			"order" => 1
+		));
+		
+		while($cursor->hasNext()){
+			$data[] = $cursor->getNext();
+		}
 
         $portlet = array();
 		
@@ -158,7 +155,7 @@ class PageManager implements IDispatcher{
             }
 			
             // Wrap everything into a portlet wrapper
-            $portlet[$el['container_name']] .= FPortletManager::loadPortletByName($el['portlet_name'], $el);
+            $portlet[$el['container_name']] .= PortletManager::loadPortletByName($el['portlet_name'], $el);
         }
 		
         $te = new TemplateEngine();

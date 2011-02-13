@@ -14,7 +14,7 @@ class ZoneManager implements IDispatcher{
     private $_name;
     private $_data;
 
-    public function ZoneManager($name){
+    public function __construct($name){
         $this->_name = $name;
 		fb("Zone name = " . $this->_name);
 		
@@ -32,19 +32,15 @@ class ZoneManager implements IDispatcher{
 
         $this->applyBeforeFilters();
 
-        require_once("src/models/Zones.php");
-
         // Force the db connection
-        $dbAdapter = Factory::get('dbAdapter');
-        $collection = new Zones();
+        $db = Factory::get('dbAdapter');
 		
-		$data = $collection->findOne(array("name" => $this->_name));
+		$data = $db->zones->findOne(array("name" => $this->_name));
 		
 		if(!$data){
 			// TODO replace this with a better error
-		
 			
-			if(strcasecmp("default", $this->_name)){
+			if(strcasecmp("default", $this->_name) == 0){
 				fb("Rebuild db");
 				require_once("init_db.php");
 			}else{

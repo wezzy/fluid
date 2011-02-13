@@ -1,5 +1,7 @@
 <?php
 
+namespace Fluid;
+
 require_once("src/models/Model.php");
 /**
  * Description of Page
@@ -21,24 +23,24 @@ class Pages extends Model{
     public function addPage($url, $title, $theme ){}
 
     public function getList($zone_id){
-        $select = $this->select();
-        if($zone_id){
-            $select->where("zone_id = ?", $zone_id);
-        }
-        $select->order("father_id");
-
-        $list = $this->fetchAll($select);
-        fb($list->toArray());
-        return $list->toArray();
-
+		
+		$result = array();
+		$db = Factory::get('dbAdapter');
+		$query = array("zone_id" => $zone_id);
+		$cursor = $db->pages->find($query);
+		
+		while($cursor->hasNext()){
+			$result[] = $cursor->getNext();
+		}
+		
+		return $result;
+		
     }
 
 	public function getDefaultPage(){
-		$select = $this->select();
-        $select->where("is_default = 1");
-        
-        $list = $this->fetchRow($select);
 
-        return $list->toArray();
+		$db = Factory::get('dbAdapter');
+		$query = array("id_default" => true);
+		return $db->pages->findOne($query);
 	}
 }

@@ -16,8 +16,7 @@ class Zones extends Model{
     protected $_sequence = true;
 	
 	public function __construct(){
-		
-		parent::__construct($this->_name);
+		parent::__construct();
 		
 	}
 	
@@ -26,10 +25,17 @@ class Zones extends Model{
      * @return array of objects [id, name]
      */
     public function getList(){
-        $select = $this->select();
-		$select->order("id");
-        $list = $this->fetchAll($select);
-        return $list->toArray();
+		
+		$result = array();
+		$db = Factory::get('dbAdapter');
+		$cursor = $db->zones->find();
+		$cursor->sort(array("name" => 1));
+		
+		while($cursor->hasNext()){
+			$result[] = $cursor->getNext();
+		}
+		
+		return $result;
     }
 
     /**
@@ -38,13 +44,9 @@ class Zones extends Model{
      * @return an array with id and name
      */
     public function getZone($parameter){
-        $select = $this->select();
-        if(is_int($parameter)){
-            $select->where("id = ?", $parameter);
-        }else{
-            $select->where("name = ?", $parameter);
-        }
+	
+        $db = Factory::get('dbAdapter');		
+        return $db->zones->findOne($parameter);
 
-        return $this->fetchRow($select);
     }
 }
