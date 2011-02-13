@@ -33,8 +33,8 @@ START_ROUTER_DISPATCH - at the beginnging of the FRouter->dispatch() function th
 END_ROUTER_DISPATCH - at the end of the FRouter->dispatch() function that determine which resource load
 START_ZONE_DISPATCH - at the beginning of the FZoneManager->dispatch() that loads the requested zone
 END_ZONE_DISPATCH - at the end of the FZoneManager->dispatch() that loads the requested zone
-START_PAGE_DISPATCH - at the beginning of the FPageManager->dispatch() that loads the requested page
-END_PAGE_DISPATCH - at the end of the FPageManager->dispatch() that loads the requested page
+START_PAGE_DISPATCH - at the beginning of the PageManager->dispatch() that loads the requested page
+END_PAGE_DISPATCH - at the end of the PageManager->dispatch() that loads the requested page
 START_TEMPLATE - at the beginning of the page template
 END_TEMPLATE - at the end of the page template
 START_TEMPLATE_HEADER - right after the <head> tag into the template
