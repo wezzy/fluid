@@ -1,0 +1,50 @@
+1 - How the code is organized ?
+there are three main directory:
+	app contains the code for that particular instance of Fluid for example the theme or custom portlets
+	libs contains all the third party library used by the framework
+	src it's the fluid source
+
+2 - Where are portlets located ?
+There are two places for portlets' code. The first is src/portlets and the other one is app/portlets
+
+3 - Why are there two location for some resources ?
+Some resources for example portlets or models can be installed by dragging them into app or src directory.
+The reason for this distinction is organization. All the code into the src directory should be native fluid code,
+in contrast the code in app is the code for the current application based on fluid. This is especially useful when a new
+release of fluid is released. In this case you have to update only src and libs but you don't have to modify where your code is, the
+app directory. It's also useful for backup, you have to save only the app directory (and off course the db)
+
+4 - Why some of your class are empty ?
+Well they are not empty, they are subclass of ZendFramework's classes that doesn't add any functionality to Zend's classes.
+We choose to subclass them to separate code that uses Fluid classes from Zend own classes. This allow us to change some
+funcionalities or add new mothods to classes without modifing the orginal Zend class.
+
+5 - What are thoose F.g() and F.s() that i can see everywhere?
+They are just shortcuts to YAHOO.Dom.Get and YAHOO.util.Selector.query. You can find them into src/js/utils.js. I thins that
+YUI it's a great framework but i found it very verbose (this is gonna be changed by v.3), for this reason i usually define some shourtcuts and some useful
+function that you can find in utils.js i encourage you to use them in your code.
+
+6 - Which events are fired ?
+
+STARTUP - At the end of the bootstrap process
+START_DISPLAY_OUTPUT - before displaying the output to the user
+END_DISPLAY_OUTPUT - soon after the output is displayed
+START_ROUTER_DISPATCH - at the beginnging of the FRouter->dispatch() function that determine which resource load
+END_ROUTER_DISPATCH - at the end of the FRouter->dispatch() function that determine which resource load
+START_ZONE_DISPATCH - at the beginning of the FZoneManager->dispatch() that loads the requested zone
+END_ZONE_DISPATCH - at the end of the FZoneManager->dispatch() that loads the requested zone
+START_PAGE_DISPATCH - at the beginning of the FPageManager->dispatch() that loads the requested page
+END_PAGE_DISPATCH - at the end of the FPageManager->dispatch() that loads the requested page
+START_TEMPLATE - at the beginning of the page template
+END_TEMPLATE - at the end of the page template
+START_TEMPLATE_HEADER - right after the <head> tag into the template
+END_TEMPLATE_HEADER - right before the </head> tag into the template
+START_TEMPLATE_BODY - right after the <body> tag into the template
+END_TEMPLATE_BODY - right before the </body> tag into the template
+START_TEMPLATE_ADMIN - before the markup for the admin toolbar
+END_TEMPLATE_ADMIN - after the markup for the admin toolbar
+PORTLET_LOADED - when a new portlet is loaded
+EXIT - it's the last line of the code before exiting
+
+7 - What are zones ?
+they are collections of pages that shares the same properties. For example all requires some actions or the access is restricted to some users

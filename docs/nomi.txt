@@ -1,0 +1,7 @@
+----------------------------------------------------------------
+						Nomi
+----------------------------------------------------------------
+Fluid: l'applicativo nella sua totalitˆ
+Portlet: un componente che viene visualizzato nel portale, sia esso un una pipes o un componente di diverso tipo
+Pipe: insieme di componenti, configurati visualmente, che producono un output
+Workflow: un workflow coinvolge diverse portlet coordinando il passaggio di dati da una portlet all'altra

@@ -1,0 +1,29 @@
+- definire azioni client side nell'editor
+- salvataggio/recupero delle portlet definite nell'editor
+- visualizzazione delle portlet definite nell'editor
+- integrazione delle portlet con i DataSource
+- Site structure
+- fare in modo che per gli amministratori vengano caricate tutte le risorse per tutte le portlet quando viene caricata la pagina
+- il path deve essere determinato dalla struttura. Dentro pages.url metto solo l'url relativo alla pagina e non /default/pages se no non ha
+    senso avere una gerarchia
+        -> ancora meglio il path resta salvato completamente dentro al campo url (performance se no devo ricalcolare i path ogni volta)
+            pero' quando lo modifico modifico solo l'ultimo pezzo,
+         Ã¨ la maschera di modifica delle pagine ad occuparsi di far inserire solo l'ultimo pezzo e poi restituire il path completo
+
+- ripristinare il servizio removePortlet (controllare iMac)
+- creare un servizio che restituisca il contenuto di una sola portlet cosi' da porter fare il reload tramite ajax
+- rivedere il caricamento delle portlet per non usare due file index.php e code.php oltretutto meglio usare il nome della portelt.php al posto di
+	index.php se no se cerco per file trovo 200 index.php e non quello che cerco
+- CMS
+    - news / events / articles
+
+- Authentication
+- Portlet manager
+- Caching
+- themes&portlets
+- Concatenate/minify CSS and JS
+
+- verificare l'autenticazione dentro ai servizi altrimenti chiunque pu˜ chiamrali direttamente e fare casini
+	- si potrebbe evitare l'accesso diretto e verificare la possibilitˆ di accederci tramite il Router. Un po' come fa Joomla
+	// no direct access
+	defined('_JEXEC') or die('Restricted access');
