@@ -36,24 +36,28 @@ class ZoneManager implements IDispatcher{
 
         // Force the db connection
         $dbAdapter = Factory::get('dbAdapter');
-        $table = new Zones();
-
-        $select = $table->select();
-        $select->where('name = ?', $this->_name);
+        $collection = new Zones();
 		
-        $data = $table->fetchRow($select);
+		$data = $collection->findOne(array("name" => $this->_name));
 		
 		if(!$data){
 			// TODO replace this with a better error
-			echo("Zone not found");
-			exit();
+		
+			
+			if(strcasecmp("default", $this->_name)){
+				fb("Rebuild db");
+				require_once("init_db.php");
+			}else{
+				echo("Zone not found");
+				exit();
+			}
+		
 		}
 		
-        $this->_data = $data->toArray();
         // TODO check ACL
 
         require_once("src/PageManager.php");
-        $page = new FPageManager($this);
+        $page = new PageManager($this);
         $page->dispatch();
 
         $this->applyAfterFilters();

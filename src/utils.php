@@ -94,7 +94,7 @@ function reqParam($what, $where = null){
 	if($value) return $value;
 
     require_once("src/views/TemplateEngine.php");
-    $te = new FTemplateEngine();
+    $te = new TemplateEngine();
     $te->assign('name', $what);
     $result = $te->fetch(APPLICATION_PATH . "/src/views/templates/missing_parameter.tpl");
 
