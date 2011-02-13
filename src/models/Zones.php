@@ -14,7 +14,13 @@ class Zones extends Model{
     protected $_name = 'zones';
     protected $_primary = 'id';
     protected $_sequence = true;
-
+	
+	public function __construct(){
+		
+		parent::__construct($this->_name);
+		
+	}
+	
     /**
      * Return the list of available zones
      * @return array of objects [id, name]

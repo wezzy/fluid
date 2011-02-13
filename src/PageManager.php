@@ -96,7 +96,6 @@ class PageManager implements IDispatcher{
         $select->where('zone_id = ?', $this->_zone->getId());
         $data = $table->fetchRow($select);
         
-
         if(!$data){
 			// TODO reaplce this with a real error
         	fb("Error while processing the page");

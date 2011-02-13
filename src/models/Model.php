@@ -8,9 +8,12 @@ namespace Fluid;
  *
  * @author wezzy
  */
-class Model{
+class Model extends \MongoCollection{
 
-    function __construct(){
-	
+    function __construct($name){
+		
+		$dbAdapter = Factory::get("dbAdapter");
+		parent::__construct($dbAdapter, $name);
+		
     }
 }

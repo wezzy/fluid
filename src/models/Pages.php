@@ -11,7 +11,13 @@ class Pages extends Model{
     protected $_name = 'pages';
     protected $_primary = 'id';
     protected $_sequence = true;
-
+	
+	public function __construct(){
+		
+		parent::__construct($this->_name);
+		
+	}
+	
     public function addPage($url, $title, $theme ){}
 
     public function getList($zone_id){
