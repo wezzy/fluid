@@ -1,6 +1,0 @@
-Todo:
- - COMPONENTS:
-Create a PHP function that laodComponents! Many many part of the CMS are repeated (for ex. the interface to assign permissions is used for pages zones and others). Load server side components. They are very similar to portlets with a configuration parameter.
-
-- EXTENSION:
-structure the project to allow developers to insert code only in the app directory. Even if they have to modify a file part of fluid itself they made a copy in app/<same path as src>/ and fluid, if the file exists load that file instead of the original file. it's great to update code like that because i just have to update src and all my modifications are saved.
